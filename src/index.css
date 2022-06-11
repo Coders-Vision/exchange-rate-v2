@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    color: white;
+  }
+  .app {
+    background-color: rgb(87, 87, 87);
+    background-image: url("./assets/Back.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    height: 100%;
+  }
+}
+
+@layer components {
+  .header-link {
+    @apply flex items-center space-x-2 cursor-pointer;
+  }
+  .default-input {
+    @apply bg-white dark:bg-[#272727] dark:text-white dark:placeholder:text-white placeholder:text-black text-black  opacity-50 appearance-none outline-none dark:border-[#d6d6d6] rounded-md border-black  border-2  transition-all delay-150 p-[2px];
+  }
+}
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
