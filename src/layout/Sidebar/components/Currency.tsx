@@ -22,14 +22,11 @@ function Currency({ code, name, symbol, flag }: IProps) {
     (state) => state.baseCurrency.baseCurrency
   );
 
-  const getSelectedCurrency = (currencyCode: string) => {
-    const currency = useAppSelector((state) =>
-      state.selectedCurrencies.selectedCurrencies.some(
-        ({ code }) => code === currencyCode
-      )
-    );
-    return currency;
-  };
+  const getSelectedCurrency = useAppSelector((state) =>
+    state.selectedCurrencies.selectedCurrencies.some(
+      (currency) => currency.code === code
+    )
+  );
 
   const getLatestRates = async () => {
     if (getBaseCurrency.code.length !== 0) {
@@ -39,7 +36,7 @@ function Currency({ code, name, symbol, flag }: IProps) {
   };
 
   const handleOnClick = (code_selected: string) => {
-    if (getBaseCurrency.code !== code_selected) {
+    if (getBaseCurrency.code !== code_selected && !getSelectedCurrency) {
       dispatch(addCurrency({ code, flag, name, symbol } as ICurrency));
       getLatestRates();
     }
@@ -49,7 +46,7 @@ function Currency({ code, name, symbol, flag }: IProps) {
     <div
       onClick={() => handleOnClick(code)}
       className={`flex items-center justify-start cursor-pointer border-b-2 dark:border-gray-600 bg-white dark:bg-[#1b1f3d] hover:bg-gray-100 transition-all delay-150 ${
-        getSelectedCurrency(code) || getBaseCurrency.code === code
+        getSelectedCurrency || getBaseCurrency.code === code
           ? "opacity-75 dark:opacity-80"
           : ""
       }`}
@@ -59,7 +56,7 @@ function Currency({ code, name, symbol, flag }: IProps) {
         {code}-{name}
       </span>
       <div className="ml-auto p-2">
-        {getSelectedCurrency(code) || getBaseCurrency.code === code ? (
+        {getSelectedCurrency || getBaseCurrency.code === code ? (
           <BiCheck className="text-2xl text-green-500 " />
         ) : (
           ""
